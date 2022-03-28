@@ -5,7 +5,11 @@ import { Wrapper } from "./styled";
 interface Props {}
 
 const Card = (props: Props) => {
-  return <Wrapper></Wrapper>;
+  return (
+    <Wrapper>
+      <p></p>
+    </Wrapper>
+  );
 };
 
 export default Card;
