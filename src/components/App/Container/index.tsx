@@ -1,32 +1,41 @@
 import axios from "axios";
+import { string } from "prop-types";
 import React, { useEffect, useState } from "react";
-import Card from "./Card";
 import { Wrapper } from "./styled";
 
 interface Props {}
 
 const Container = (props: Props) => {
-  const [jokes, setJokes] = useState("");
-  const [jokesId, setJokesId] = useState("");
+  const [jokes, setJokes] = useState([]);
+  const API_URL = "https://api.chucknorris.io/jokes/random";
+  let j = 0;
 
-  for (let i = 0; i < 10; i++) {
-    useEffect(() => {
-      axios
-        .get("https://api.chucknorris.io/jokes/random")
-        .then((response) => {
-          const { data } = response;
-          setJokes(data.value);
-          setJokesId(data.id);
-          console.log(data.id);
-        })
-        .catch((error) => console.error(error));
-    }, []);
-    return <div>{jokes}</div>;
-  }
+  useEffect(() => {
+    for (let i = 0; i < 10; i++) {
+      fetchChuck();
+    }
+  }, []);
+
+  const fetchChuck = () => {
+    axios
+      .get(API_URL)
+      .then((response) => {
+        const { data } = response;
+
+        setJokes((arr) => [...arr, data.value]);
+      })
+      .catch((error) => console.error(error));
+  };
 
   return (
     <Wrapper>
-      <Card />
+      {jokes.map(function (element: String) {
+        return (
+          <div className="card" key={j++}>
+            {element}
+          </div>
+        );
+      })}
     </Wrapper>
   );
 };
