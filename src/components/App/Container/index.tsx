@@ -1,6 +1,5 @@
 import axios from "axios";
-import { string } from "prop-types";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Wrapper } from "./styled";
 
 interface Props {}
@@ -9,6 +8,7 @@ const Container = (props: Props) => {
   const [jokes, setJokes] = useState([]);
   const API_URL = "https://api.chucknorris.io/jokes/random";
   let j = 0;
+  let g = 1;
 
   useEffect(() => {
     for (let i = 0; i < 10; i++) {
@@ -32,7 +32,8 @@ const Container = (props: Props) => {
       {jokes.map(function (element: String) {
         return (
           <div className="card" key={j++}>
-            {element}
+            <img src={`../images/${g++}.jpg`} alt="Chuck Norris" />
+            <p>{element}</p>
           </div>
         );
       })}
